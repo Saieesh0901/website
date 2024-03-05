@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="font-sans flex flex-col items-center justify-center h-screen m-0 bg-gradient-to-br from-green-500 to-teal-500 text-white">
+
+    <div class="w-80 p-8 bg-gray-800 rounded-lg shadow-md">
+
+        <h1 class="text-3xl mb-4">Sign Up</h1>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="mb-4">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form method="post" class="flex flex-col items-center">
+            {{ form.hidden_tag() }}
+
+            <label for="username" class="mb-2">Username:</label>
+            {{ form.username(class="p-2 border bg-gray-700 text-white") }}
+
+            <label for="password" class="mb-2">Password:</label>
+            {{ form.password(class="p-2 border bg-gray-700 text-white") }}
+
+            <label for="confirm_password" class="mb-2">Confirm Password:</label>
+            {{ form.confirm_password(class="p-2 border bg-gray-700 text-white") }}
+
+            {{ form.submit(class="p-2 bg-blue-500 text-white rounded-full mt-4") }}
+        </form>
+
+        <p class="mt-4 text-sm">Already have an account? <a href="{{ url_for('login') }}" class="text-blue-300">Log in here</a>.</p>
+
+    </div>
+
+</body>
+
+</html>

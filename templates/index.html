@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-blue-500 to-purple-500 text-white h-screen flex flex-col items-center justify-center">
+
+    <button id="logout-btn" onclick="window.location.href='{{ url_for('logout') }}';"
+        class="absolute top-4 right-4 px-4 py-2 bg-red-600 text-white rounded-md cursor-pointer">Logout</button>
+
+    <div class="bg-white p-8 rounded-md shadow-md max-w-md w-full text-black">
+
+        <h1 class="text-2xl mb-4">Welcome, {{ current_user.username }}!</h1>
+
+        <h2 class="text-xl mb-2">Enter a word:</h2>
+
+        {% if error_message %}
+        <p class="text-red-500">{{ error_message }}</p>
+        {% endif %}
+
+        <form action="/check_word" method="post" class="mb-4">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4">
+                <label for="word" class="block text-sm font-medium text-gray-600">Word:</label>
+                {{ form.word(class="mt-1 p-2 w-full border border-gray-300 rounded-md") }}
+            </div>
+
+            <div class="mb-4">
+                <label for="language" class="block text-sm font-medium text-gray-600">Language:</label>
+                <select name="language" id="language"
+                    class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Gujarathi">Gujarathi</option>
+                    <option value="Telugu">Telugu</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Kannada">Kannada</option>
+                    <option value="Malyalam">Malyalam</option>
+                    <option value="odia">odia</option>
+                    <option value="Marathi">Marathi</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+
+            {{ form.submit(class="bg-blue-500 text-white py-2 px-4 rounded-full") }}
+        </form>
+
+        <div class="mb-8 text-black">
+            <h2 class="text-xl mb-2">Total Accepted Word Count: <span
+                    id="total-accepted-count">{{ total_accepted_count }}</span></h2>
+            <h2 class="text-xl mb-2">Today's Accepted Word Count: <span
+                    id="today-accepted-count">{{ today_accepted_count }}</span></h2>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="text-red-500">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+    </div>
+
+</body>
+
+</html>
